@@ -18,6 +18,11 @@ public:
 	ATank();
 
 
+	void AimAt(
+		const FVector& AimPosition
+	);
+
+
 protected:
 
 	virtual void BeginPlay() override;

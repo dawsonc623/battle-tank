@@ -9,6 +9,26 @@
 #include "Tank/Tank.h"
 
 
+AAiTankController::AAiTankController()
+{
+	PrimaryActorTick.bCanEverTick = true;
+}
+
+
+void AAiTankController::Tick(
+	float DeltaTime
+) {
+	APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+
+	ATank* AiTank = Cast<ATank>(
+		GetPawn()
+	);
+
+	AiTank->AimAt(
+		PlayerPawn->GetActorLocation()
+	);
+}
+
 void AAiTankController::BeginPlay()
 {
 	Super::BeginPlay();

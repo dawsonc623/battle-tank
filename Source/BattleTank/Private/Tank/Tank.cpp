@@ -10,6 +10,12 @@ ATank::ATank()
 }
 
 
+void ATank::AimAt(
+	const FVector& AimLocation
+) {
+	UE_LOG(LogTemp, Warning, TEXT("Aiming toward location %s"), *(AimLocation.ToString()))
+}
+
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();

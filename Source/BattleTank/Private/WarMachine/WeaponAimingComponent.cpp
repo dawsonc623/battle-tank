@@ -3,23 +3,66 @@
 
 #include "WarMachine/WeaponAimingComponent.h"
 
+#include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
+
+#include "WarMachine/Barrel.h"
+
 
 UWeaponAimingComponent::UWeaponAimingComponent()
 {
 	// TODO Should this tick?
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 
 void UWeaponAimingComponent::AimAt(
-	const FVector& AimLocation
+	const FVector& AimLocation,
+	float LaunchSpeed
 ) {
-	UE_LOG(LogTemp, Warning, TEXT("Aiming toward location %s"), *(AimLocation.ToString()))
+	if (ensure(Barrel))
+	{
+		FVector LaunchVelocity;
+
+		FVector FiringLocation = Barrel->GetSocketLocation(
+			FName("Projectile")
+		);
+
+		bool bVelocityCalculated = UGameplayStatics::SuggestProjectileVelocity(
+			this,
+			LaunchVelocity,
+			FiringLocation,
+			AimLocation,
+			LaunchSpeed,
+			false,
+			0.0f,
+			0.0f,
+			ESuggestProjVelocityTraceOption::DoNotTrace
+		);
+
+		if (bVelocityCalculated)
+		{
+			FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
+			FRotator LaunchRotation = LaunchVelocity.Rotation();
+
+			FRotator DeltaRotation = LaunchRotation - BarrelRotation;
+
+			Barrel->Elevate(
+				DeltaRotation.Pitch
+			);
+		}
+	}
 }
 
 void UWeaponAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void UWeaponAimingComponent::SetBarrel(
+	UBarrel* NewBarrel
+) {
+	Barrel = NewBarrel;
 }
 
 void UWeaponAimingComponent::TickComponent(
@@ -33,4 +76,3 @@ void UWeaponAimingComponent::TickComponent(
 		ThisTickFunction
 	);
 }
-

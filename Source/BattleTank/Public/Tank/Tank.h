@@ -8,6 +8,9 @@
 #include "Tank.generated.h"
 
 
+class UBarrel;
+
+
 class UWeaponAimingComponent;
 
 
@@ -26,6 +29,11 @@ public:
 		const FVector& AimLocation
 	);
 
+	UFUNCTION(BlueprintCallable, Category = "BarrelConfiguration")
+	void SetBarrel(
+		UBarrel* NewBarrel
+	);
+
 
 protected:
 
@@ -35,5 +43,8 @@ protected:
 private:
 
 	UWeaponAimingComponent* AimingComponent = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 4000;
 
 };

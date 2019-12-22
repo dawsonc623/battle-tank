@@ -20,7 +20,8 @@ void ATank::AimAt(
 	const FVector& AimLocation
 ) {
 	AimingComponent->AimAt(
-		AimLocation
+		AimLocation,
+		LaunchSpeed
 	);
 }
 
@@ -29,4 +30,12 @@ void ATank::BeginPlay()
 	Super::BeginPlay();
 
 	UE_LOG(LogTemp, Warning, TEXT("Tank %s spawned"), *GetName())
+}
+
+void ATank::SetBarrel(
+	UBarrel* NewBarrel
+) {
+	AimingComponent->SetBarrel(
+		NewBarrel
+	);
 }

@@ -8,6 +8,9 @@
 #include "WeaponAimingComponent.generated.h"
 
 
+class UBarrel;
+
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UWeaponAimingComponent : public UActorComponent
 {
@@ -20,7 +23,12 @@ public:
 
 
 	void AimAt(
-		const FVector& AimLocation
+		const FVector& AimLocation,
+		float LaunchSpeed
+	);
+
+	void SetBarrel(
+		UBarrel* NewBarrel
 	);
 
 	virtual void TickComponent(
@@ -31,6 +39,8 @@ public:
 
 
 protected:
+
+	UBarrel* Barrel = nullptr;
 
 	virtual void BeginPlay() override;
 		

@@ -5,6 +5,7 @@
 
 #include "Engine/World.h"
 
+#include "Tank/TankMovementComponent.h"
 #include "WarMachine/Barrel.h"
 #include "WarMachine/Projectile.h"
 #include "WarMachine/WeaponAimingComponent.h"
@@ -32,11 +33,13 @@ void ATank::AimAt(
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
+
+	LastFireTime = GetWorld()->GetDeltaSeconds();
 }
 
 void ATank::FireProjectile()
 {
-	if (ensure(Barrel && ProjectileBlueprint))// && AimingState != EAimingState::Reloading)
+	if (ensure(Barrel && ProjectileBlueprint) && (GetWorld()->GetTimeSeconds() - LastFireTime) >= ReloadDelay)// && AimingState != EAimingState::Reloading)
 	{
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
@@ -56,7 +59,7 @@ void ATank::FireProjectile()
 			LaunchSpeed
 		);
 
-		//LastFireTime = GetWorld()->GetTimeSeconds();
+		LastFireTime = GetWorld()->GetTimeSeconds();
 		//AimingState = EAimingState::Reloading;
 	}
 }

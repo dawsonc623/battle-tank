@@ -29,4 +29,5 @@ void AAiTankController::Tick(
 	);
 
 	// TODO Implement Firing when not annoying to do so
+	//AiTank->FireProjectile();
 }

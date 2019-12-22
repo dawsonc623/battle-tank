@@ -10,6 +10,7 @@
 
 class AProjectile;
 class UBarrel;
+class UTankMovementComponent;
 class UWeaponAimingComponent;
 
 
@@ -47,16 +48,26 @@ protected:
 	virtual void BeginPlay() override;
 
 
+	UPROPERTY(BlueprintReadOnly, Category = "Movement")
+	UTankMovementComponent* MovementComponent = nullptr;
+
+
 private:
 
 	UWeaponAimingComponent* AimingComponent = nullptr;
 
 	UBarrel* Barrel = nullptr;
 
+	float LastFireTime = 0.0f;
+
+
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000;
 
 	UPROPERTY(EditDefaultsOnly, Category = "ProjectileConfiguration")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float ReloadDelay = 3.0f;
 
 };

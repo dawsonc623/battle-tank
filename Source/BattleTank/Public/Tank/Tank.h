@@ -34,6 +34,11 @@ public:
 		UBarrel* NewBarrel
 	);
 
+	UFUNCTION(BlueprintCallable, Category = "TurretConfiguration")
+	void SetTurret(
+		UTurret* NewTurret
+	);
+
 
 protected:
 

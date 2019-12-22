@@ -14,7 +14,11 @@ void UBarrel::Elevate(
 	// Rate between -1 and 1
 	float ElevationChange
 ) {
-	ElevationChange = FMath::Clamp(ElevationChange, -1.0f, 1.0f);
+	ElevationChange = FMath::Clamp(
+		ElevationChange,
+		-1.0f,
+		1.0f
+	);
 
 	float ElevationDelta = MaximumElevationRate * ElevationChange * GetWorld()->GetDeltaSeconds();
 

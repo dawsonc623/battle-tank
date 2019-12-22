@@ -9,6 +9,7 @@
 
 
 class UBarrel;
+class UTurret;
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -31,6 +32,10 @@ public:
 		UBarrel* NewBarrel
 	);
 
+	void SetTurret(
+		UTurret* NewTurret
+	);
+
 	virtual void TickComponent(
 		float DeltaTime,
 		ELevelTick TickType,
@@ -41,6 +46,8 @@ public:
 protected:
 
 	UBarrel* Barrel = nullptr;
+
+	UTurret* Turret = nullptr;
 
 	virtual void BeginPlay() override;
 		

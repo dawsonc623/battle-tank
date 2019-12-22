@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 
 #include "WarMachine/Barrel.h"
+#include "WarMachine/Turret.h"
 
 
 UWeaponAimingComponent::UWeaponAimingComponent()
@@ -50,6 +51,10 @@ void UWeaponAimingComponent::AimAt(
 			Barrel->Elevate(
 				DeltaRotation.Pitch
 			);
+
+			Turret->Rotate(
+				DeltaRotation.Yaw
+			);
 		}
 	}
 }
@@ -63,6 +68,12 @@ void UWeaponAimingComponent::SetBarrel(
 	UBarrel* NewBarrel
 ) {
 	Barrel = NewBarrel;
+}
+
+void UWeaponAimingComponent::SetTurret(
+	UTurret* NewTurret
+) {
+	Turret = NewTurret;
 }
 
 void UWeaponAimingComponent::TickComponent(

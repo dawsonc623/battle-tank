@@ -3,6 +3,10 @@
 
 #include "Tank/Tank.h"
 
+#include "Engine/World.h"
+
+#include "WarMachine/Barrel.h"
+#include "WarMachine/Projectile.h"
 #include "WarMachine/WeaponAimingComponent.h"
 
 
@@ -32,7 +36,29 @@ void ATank::BeginPlay()
 
 void ATank::FireProjectile()
 {
-	UE_LOG(LogTemp, Warning, TEXT("PEW PEW"))
+	if (ensure(Barrel && ProjectileBlueprint))// && AimingState != EAimingState::Reloading)
+	{
+		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(
+				FName(
+					"Projectile"
+				)
+			),
+			Barrel->GetSocketRotation(
+				FName(
+					"Projectile"
+				)
+			)
+		);
+
+		Projectile->Launch(
+			LaunchSpeed
+		);
+
+		//LastFireTime = GetWorld()->GetTimeSeconds();
+		//AimingState = EAimingState::Reloading;
+	}
 }
 
 void ATank::SetBarrel(
@@ -41,6 +67,8 @@ void ATank::SetBarrel(
 	AimingComponent->SetBarrel(
 		NewBarrel
 	);
+
+	Barrel = NewBarrel;
 }
 
 void ATank::SetTurret(

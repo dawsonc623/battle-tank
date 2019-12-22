@@ -8,9 +8,8 @@
 #include "Tank.generated.h"
 
 
+class AProjectile;
 class UBarrel;
-
-
 class UWeaponAimingComponent;
 
 
@@ -52,7 +51,12 @@ private:
 
 	UWeaponAimingComponent* AimingComponent = nullptr;
 
+	UBarrel* Barrel = nullptr;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000;
+
+	UPROPERTY(EditDefaultsOnly, Category = "ProjectileConfiguration")
+	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 };

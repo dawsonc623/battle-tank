@@ -28,8 +28,11 @@ void ATank::AimAt(
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
+}
 
-	UE_LOG(LogTemp, Warning, TEXT("Tank %s spawned"), *GetName())
+void ATank::FireProjectile()
+{
+	UE_LOG(LogTemp, Warning, TEXT("PEW PEW"))
 }
 
 void ATank::SetBarrel(

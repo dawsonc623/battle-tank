@@ -29,6 +29,9 @@ public:
 		const FVector& AimLocation
 	);
 
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	void FireProjectile();
+
 	UFUNCTION(BlueprintCallable, Category = "BarrelConfiguration")
 	void SetBarrel(
 		UBarrel* NewBarrel

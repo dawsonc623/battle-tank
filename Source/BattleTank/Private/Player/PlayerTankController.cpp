@@ -18,9 +18,6 @@ APlayerTankController::APlayerTankController()
 void APlayerTankController::BeginPlay()
 {
 	Super::BeginPlay();
-
-	UE_LOG(LogTemp, Warning, TEXT("Player joined"))
-	UE_LOG(LogTemp, Warning, TEXT("Player possessed %s"), *(GetPawn()->GetName()))
 }
 
 void APlayerTankController::Tick(
@@ -60,8 +57,6 @@ void APlayerTankController::Tick(
 
 	if (bHitLocationFound)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Aiming at %s"), *(AimHitResult.GetActor()->GetName()))
-
 		ATank* PlayerTank = Cast<ATank>(GetPawn());
 
 		PlayerTank->AimAt(

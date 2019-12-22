@@ -45,10 +45,13 @@ public:
 
 protected:
 
+	virtual void BeginPlay() override;
+
+
+private:
+
 	UBarrel* Barrel = nullptr;
 
 	UTurret* Turret = nullptr;
-
-	virtual void BeginPlay() override;
 		
 };

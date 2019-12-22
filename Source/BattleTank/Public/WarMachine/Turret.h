@@ -27,6 +27,6 @@ public:
 private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "TurretConfiguration")
-	float MaximumRotationRate = 10;
+	float MaximumRotationRate = 25;
 
 };

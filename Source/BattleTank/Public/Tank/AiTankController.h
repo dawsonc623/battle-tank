@@ -23,4 +23,10 @@ public:
 		float DeltaTime
 	) override;
 
+
+private:
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float FiringRadius = 3000;
+
 };

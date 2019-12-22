@@ -24,10 +24,18 @@ void AAiTankController::Tick(
 		GetPawn()
 	);
 
-	AiTank->AimAt(
-		PlayerPawn->GetActorLocation()
-	);
+	if (ensure(PlayerPawn && AiTank))
+	{
+		MoveToActor(
+			PlayerPawn,
+			FiringRadius
+		);
 
-	// TODO Implement Firing when not annoying to do so
-	//AiTank->FireProjectile();
+		AiTank->AimAt(
+			PlayerPawn->GetActorLocation()
+		);
+
+		// TODO Implement Firing when not annoying to do so
+		//AiTank->FireProjectile();
+	}
 }

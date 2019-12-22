@@ -3,17 +3,25 @@
 
 #include "Tank/Tank.h"
 
+#include "WarMachine/WeaponAimingComponent.h"
+
 
 ATank::ATank()
 {
 	PrimaryActorTick.bCanEverTick = false;
+
+	AimingComponent = CreateDefaultSubobject<UWeaponAimingComponent>(
+		FName("AimingComponent")
+	);
 }
 
 
 void ATank::AimAt(
 	const FVector& AimLocation
 ) {
-	UE_LOG(LogTemp, Warning, TEXT("Aiming toward location %s"), *(AimLocation.ToString()))
+	AimingComponent->AimAt(
+		AimLocation
+	);
 }
 
 void ATank::BeginPlay()

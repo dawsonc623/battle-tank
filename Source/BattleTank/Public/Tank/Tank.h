@@ -7,6 +7,10 @@
 
 #include "Tank.generated.h"
 
+
+class UWeaponAimingComponent;
+
+
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -19,12 +23,17 @@ public:
 
 
 	void AimAt(
-		const FVector& AimPosition
+		const FVector& AimLocation
 	);
 
 
 protected:
 
 	virtual void BeginPlay() override;
+
+
+private:
+
+	UWeaponAimingComponent* AimingComponent = nullptr;
 
 };

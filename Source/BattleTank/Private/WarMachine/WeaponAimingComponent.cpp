@@ -7,13 +7,13 @@
 #include "Kismet/GameplayStatics.h"
 
 #include "WarMachine/Barrel.h"
+#include "WarMachine/Projectile.h"
 #include "WarMachine/Turret.h"
 
 
 UWeaponAimingComponent::UWeaponAimingComponent()
 {
-	// TODO Should this tick?
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
 }
 
 
@@ -45,15 +45,36 @@ void UWeaponAimingComponent::AimAt(
 			FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
 			FRotator LaunchRotation = LaunchVelocity.Rotation();
 
-			FRotator DeltaRotation = LaunchRotation - BarrelRotation;
+			if (
+				BarrelRotation.Equals(
+					LaunchRotation,
+					0.1
+				)
+			) {
+				if (AimingState != EAimingState::Reloading && AimingState != EAimingState::Ready)
+				{
+					UE_LOG(LogTemp, Warning, TEXT("Aiming aligned"))
+					AimingState = EAimingState::Ready;
+				}
+			}
+			else
+			{
+				if (AimingState != EAimingState::Reloading && AimingState != EAimingState::Aiming)
+				{
+					UE_LOG(LogTemp, Warning, TEXT("Aligning Aim"))
+					AimingState = EAimingState::Aiming;
+				}
 
-			Barrel->Elevate(
-				DeltaRotation.Pitch
-			);
+				FRotator DeltaRotation = LaunchRotation - BarrelRotation;
 
-			Turret->Rotate(
-				DeltaRotation.Yaw
-			);
+				Barrel->Elevate(
+					DeltaRotation.Pitch
+				);
+
+				Turret->Rotate(
+					DeltaRotation.Yaw
+				);
+			}
 		}
 	}
 }
@@ -61,6 +82,35 @@ void UWeaponAimingComponent::AimAt(
 void UWeaponAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	LastFireTime = GetWorld()->GetTimeSeconds();
+}
+
+void UWeaponAimingComponent::FireProjectile()
+{
+	if (ensure(Barrel && ProjectileBlueprint) && AimingState != EAimingState::Reloading)
+	{
+		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(
+				FName(
+					"Projectile"
+				)
+			),
+			Barrel->GetSocketRotation(
+				FName(
+					"Projectile"
+				)
+			)
+		);
+
+		Projectile->Launch(
+			LaunchSpeed
+		);
+
+		LastFireTime = GetWorld()->GetTimeSeconds();
+		AimingState = EAimingState::Reloading;
+	}
 }
 
 void UWeaponAimingComponent::Initialize(
@@ -81,4 +131,13 @@ void UWeaponAimingComponent::TickComponent(
 		TickType,
 		ThisTickFunction
 	);
+
+	if (AimingState == EAimingState::Reloading && GetWorld()->GetTimeSeconds() - LastFireTime > ReloadDelay)
+	{
+		if (AimingState != EAimingState::Ready)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Reloading finished"))
+			AimingState = EAimingState::Ready;
+		}
+	}
 }

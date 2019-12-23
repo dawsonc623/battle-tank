@@ -8,6 +8,7 @@
 #include "WeaponAimingComponent.generated.h"
 
 
+class AProjectile;
 class UBarrel;
 class UTurret;
 
@@ -43,6 +44,9 @@ public:
 	) override;
 
 
+	UFUNCTION(BlueprintCallable, Category = "Combat")
+	void FireProjectile();
+
 	UFUNCTION(BlueprintCallable, Category = "Initialization")
 	void Initialize(
 		UBarrel* NewBarrel,
@@ -63,10 +67,18 @@ private:
 
 	UBarrel* Barrel = nullptr;
 
+	float LastFireTime = 0.0f;
+
 	UTurret* Turret = nullptr;
 
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	float LaunchSpeed = 4000;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	float ReloadDelay = 3.0f;
 		
 };

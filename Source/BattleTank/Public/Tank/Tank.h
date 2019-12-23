@@ -11,7 +11,6 @@
 class AProjectile;
 class UBarrel;
 class UTankMovementComponent;
-class UWeaponAimingComponent;
 
 
 UCLASS()
@@ -25,49 +24,34 @@ public:
 	ATank();
 
 
-	void AimAt(
-		const FVector& AimLocation
-	);
-
-	UFUNCTION(BlueprintCallable, Category = "Firing")
+	UFUNCTION(BlueprintCallable, Category = "Combat")
 	void FireProjectile();
-
-	UFUNCTION(BlueprintCallable, Category = "BarrelConfiguration")
-	void SetBarrel(
-		UBarrel* NewBarrel
-	);
-
-	UFUNCTION(BlueprintCallable, Category = "TurretConfiguration")
-	void SetTurret(
-		UTurret* NewTurret
-	);
 
 
 protected:
-
-	virtual void BeginPlay() override;
-
 
 	UPROPERTY(BlueprintReadOnly, Category = "Movement")
 	UTankMovementComponent* MovementComponent = nullptr;
 
 
+	virtual void BeginPlay() override;
+
+
 private:
 
-	UWeaponAimingComponent* AimingComponent = nullptr;
 
 	UBarrel* Barrel = nullptr;
 
 	float LastFireTime = 0.0f;
 
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	float LaunchSpeed = 4000;
 
-	UPROPERTY(EditDefaultsOnly, Category = "ProjectileConfiguration")
+	UPROPERTY(EditDefaultsOnly, Category = "Projectile")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	float ReloadDelay = 3.0f;
 
 };

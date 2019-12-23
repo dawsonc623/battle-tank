@@ -28,7 +28,7 @@ public:
 	) override;
 
 
-	UFUNCTION(BlueprintCallable, Category = "TrackConfiguration")
+	UFUNCTION(BlueprintCallable, Category = "Initialization")
 	void Initialize(
 		UTrack* NewLeftTrack,
 		UTrack* NewRightTrack

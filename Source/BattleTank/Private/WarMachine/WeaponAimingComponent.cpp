@@ -18,10 +18,9 @@ UWeaponAimingComponent::UWeaponAimingComponent()
 
 
 void UWeaponAimingComponent::AimAt(
-	const FVector& AimLocation,
-	float LaunchSpeed
+	const FVector& AimLocation
 ) {
-	if (ensure(Barrel))
+	if (ensure(Barrel && Turret))
 	{
 		FVector LaunchVelocity;
 
@@ -64,15 +63,11 @@ void UWeaponAimingComponent::BeginPlay()
 	Super::BeginPlay();
 }
 
-void UWeaponAimingComponent::SetBarrel(
-	UBarrel* NewBarrel
-) {
-	Barrel = NewBarrel;
-}
-
-void UWeaponAimingComponent::SetTurret(
+void UWeaponAimingComponent::Initialize(
+	UBarrel* NewBarrel,
 	UTurret* NewTurret
 ) {
+	Barrel = NewBarrel;
 	Turret = NewTurret;
 }
 

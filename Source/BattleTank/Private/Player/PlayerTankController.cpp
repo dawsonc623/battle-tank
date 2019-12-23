@@ -7,17 +7,22 @@
 #include "GameFramework/Pawn.h"
 
 #include "Tank/Tank.h"
-
-
-APlayerTankController::APlayerTankController()
-{
-	PrimaryActorTick.bCanEverTick = true;
-}
+#include "WarMachine/WeaponAimingComponent.h"
 
 
 void APlayerTankController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// TODO Inject AimingComponent instead of this
+	UWeaponAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UWeaponAimingComponent>();
+
+	if (ensure(AimingComponent))
+	{
+		AimingComponentReady(
+			AimingComponent
+		);
+	}
 }
 
 void APlayerTankController::Tick(
@@ -57,10 +62,14 @@ void APlayerTankController::Tick(
 
 	if (bHitLocationFound)
 	{
-		ATank* PlayerTank = Cast<ATank>(GetPawn());
+		// TODO Inject AimingComponent instead of this
+		UWeaponAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UWeaponAimingComponent>();
 
-		PlayerTank->AimAt(
-			AimHitResult.ImpactPoint
-		);
+		if (ensure(AimingComponent))
+		{
+			AimingComponent->AimAt(
+				AimHitResult.ImpactPoint
+			);
+		}
 	}
 }

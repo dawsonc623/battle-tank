@@ -8,6 +8,8 @@
 #include "AiTankController.generated.h"
 
 
+// TODO This should have gone in an Ai directory =/
+
 UCLASS()
 class BATTLETANK_API AAiTankController : public AAIController
 {
@@ -16,9 +18,6 @@ class BATTLETANK_API AAiTankController : public AAIController
 
 public:
 
-	AAiTankController();
-
-
 	virtual void Tick(
 		float DeltaTime
 	) override;
@@ -26,7 +25,7 @@ public:
 
 private:
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	float FiringRadius = 3000;
 
 };

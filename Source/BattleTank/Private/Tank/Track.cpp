@@ -20,8 +20,11 @@ void UTrack::SetThrottle(
 		GetOwner()->GetRootComponent()
 	);
 
-	Tank->AddForceAtLocation(
-		ForceApplied,
-		ForceLocation
-	);
+	if (ensure(Tank))
+	{
+		Tank->AddForceAtLocation(
+			ForceApplied,
+			ForceLocation
+		);
+	}
 }

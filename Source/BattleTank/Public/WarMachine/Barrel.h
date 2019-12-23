@@ -27,13 +27,13 @@ public:
 
 private:
 
-	UPROPERTY(EditDefaultsOnly, Category = "BarrelConfiguration")
+	UPROPERTY(EditDefaultsOnly, Category = "Barrel")
 	float MaximumElevation = 40;
 
-	UPROPERTY(EditDefaultsOnly, Category = "BarrelConfiguration")
+	UPROPERTY(EditDefaultsOnly, Category = "Barrel")
 	float MaximumElevationRate = 10;
 
-	UPROPERTY(EditDefaultsOnly, Category = "BarrelConfiguration")
+	UPROPERTY(EditDefaultsOnly, Category = "Barrel")
 	float MinimumElevation = 0;
 
 };

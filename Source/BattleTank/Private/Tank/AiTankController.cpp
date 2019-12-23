@@ -6,36 +6,37 @@
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
 
-#include "Tank/Tank.h"
-
-
-AAiTankController::AAiTankController()
-{
-	PrimaryActorTick.bCanEverTick = true;
-}
+#include "WarMachine/WeaponAimingComponent.h"
 
 
 void AAiTankController::Tick(
 	float DeltaTime
 ) {
-	APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
-
-	ATank* AiTank = Cast<ATank>(
-		GetPawn()
+	Super::Tick(
+		DeltaTime
 	);
 
-	if (ensure(PlayerPawn && AiTank))
+	APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+
+	APawn* AiPawn = GetPawn();
+
+	if (ensure(PlayerPawn && AiPawn))
 	{
 		MoveToActor(
 			PlayerPawn,
 			FiringRadius
 		);
 
-		AiTank->AimAt(
-			PlayerPawn->GetActorLocation()
-		);
+		UWeaponAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UWeaponAimingComponent>();
 
-		// TODO Implement Firing when not annoying to do so
-		//AiTank->FireProjectile();
+		if (ensure(AimingComponent))
+		{
+			AimingComponent->AimAt(
+				PlayerPawn->GetActorLocation()
+			);
+
+			// TODO Re-enable firing when it is not frustrating to have it on
+			//AimingComponent->Fire();
+		}
 	}
 }

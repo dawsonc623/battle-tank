@@ -16,9 +16,6 @@ class BATTLETANK_API APlayerTankController : public APlayerController
 
 public:
 
-	APlayerTankController();
-
-
 	virtual void Tick(
 		float DeltaTime
 	) override;
@@ -27,6 +24,12 @@ public:
 protected:
 
 	virtual void BeginPlay() override;
+
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "AimingComponent")
+	void AimingComponentReady(
+		UWeaponAimingComponent* AimingComponent
+	);
 
 
 private:

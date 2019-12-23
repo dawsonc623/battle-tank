@@ -12,7 +12,16 @@ class UBarrel;
 class UTurret;
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UENUM()
+enum class EAimingState : uint8
+{
+	Aiming,
+	Ready,
+	Reloading
+};
+
+
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UWeaponAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -24,16 +33,7 @@ public:
 
 
 	void AimAt(
-		const FVector& AimLocation,
-		float LaunchSpeed
-	);
-
-	void SetBarrel(
-		UBarrel* NewBarrel
-	);
-
-	void SetTurret(
-		UTurret* NewTurret
+		const FVector& AimLocation
 	);
 
 	virtual void TickComponent(
@@ -43,7 +43,18 @@ public:
 	) override;
 
 
+	UFUNCTION(BlueprintCallable, Category = "Initialization")
+	void Initialize(
+		UBarrel* NewBarrel,
+		UTurret* NewTurret
+	);
+
+
 protected:
+
+	UPROPERTY(BlueprintReadOnly, Category = "Combat")
+	EAimingState AimingState = EAimingState::Reloading;
+
 
 	virtual void BeginPlay() override;
 
@@ -53,5 +64,9 @@ private:
 	UBarrel* Barrel = nullptr;
 
 	UTurret* Turret = nullptr;
+
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	float LaunchSpeed = 4000;
 		
 };

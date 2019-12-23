@@ -19,14 +19,14 @@ public:
 	UTrack();
 
 
-	UFUNCTION(BlueprintCallable, Category = "Driving")
+	UFUNCTION(BlueprintCallable, Category = "Movement")
 	void SetThrottle(
 		float NewThrottle
 	);
 
 private:
 
-	UPROPERTY(EditDefaultsOnly, Category = "Driving")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 	float MaximumTrackDrivingForce = 40000000;
 
 };

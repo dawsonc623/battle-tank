@@ -5,30 +5,15 @@
 
 #include "Engine/World.h"
 
-#include "Tank/TankMovementComponent.h"
 #include "WarMachine/Barrel.h"
 #include "WarMachine/Projectile.h"
-#include "WarMachine/WeaponAimingComponent.h"
 
 
 ATank::ATank()
 {
 	PrimaryActorTick.bCanEverTick = false;
-
-	AimingComponent = CreateDefaultSubobject<UWeaponAimingComponent>(
-		FName("AimingComponent")
-	);
 }
 
-
-void ATank::AimAt(
-	const FVector& AimLocation
-) {
-	AimingComponent->AimAt(
-		AimLocation,
-		LaunchSpeed
-	);
-}
 
 void ATank::BeginPlay()
 {
@@ -62,22 +47,4 @@ void ATank::FireProjectile()
 		LastFireTime = GetWorld()->GetTimeSeconds();
 		//AimingState = EAimingState::Reloading;
 	}
-}
-
-void ATank::SetBarrel(
-	UBarrel* NewBarrel
-) {
-	AimingComponent->SetBarrel(
-		NewBarrel
-	);
-
-	Barrel = NewBarrel;
-}
-
-void ATank::SetTurret(
-	UTurret* NewTurret
-) {
-	AimingComponent->SetTurret(
-		NewTurret
-	);
 }

@@ -69,8 +69,19 @@ void UWeaponAimingComponent::AimAt(
 					DeltaRotation.Pitch
 				);
 
+				float Rotation = DeltaRotation.Yaw;
+
+				if (Rotation > 180)
+				{
+					Rotation -= 360;
+				}
+				else if (Rotation < -180)
+				{
+					Rotation += 360;
+				}
+
 				Turret->Rotate(
-					DeltaRotation.Yaw
+					Rotation
 				);
 			}
 		}

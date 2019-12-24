@@ -52,8 +52,6 @@ void UTankMovementComponent::RequestDirectMove(
 		AiMovementVector
 	).Z;
 
-	//UE_LOG(LogTemp, Warning, TEXT("%s is turning towards %s at rate %f"), *(GetOwner()->GetName()), *(MoveVelocity.GetSafeNormal().ToString()), TurnRate)
-
 	MoveStraight(
 		StraightRate
 	);

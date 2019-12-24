@@ -53,7 +53,6 @@ void UWeaponAimingComponent::AimAt(
 			) {
 				if (AimingState != EAimingState::Reloading && AimingState != EAimingState::Ready)
 				{
-					UE_LOG(LogTemp, Warning, TEXT("Aiming aligned"))
 					AimingState = EAimingState::Ready;
 				}
 			}
@@ -61,7 +60,6 @@ void UWeaponAimingComponent::AimAt(
 			{
 				if (AimingState != EAimingState::Reloading && AimingState != EAimingState::Aiming)
 				{
-					UE_LOG(LogTemp, Warning, TEXT("Aligning Aim"))
 					AimingState = EAimingState::Aiming;
 				}
 
@@ -136,7 +134,6 @@ void UWeaponAimingComponent::TickComponent(
 	{
 		if (AimingState != EAimingState::Ready)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Reloading finished"))
 			AimingState = EAimingState::Ready;
 		}
 	}

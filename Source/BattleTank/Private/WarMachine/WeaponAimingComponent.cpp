@@ -122,6 +122,11 @@ void UWeaponAimingComponent::FireProjectile()
 	}
 }
 
+EAimingState UWeaponAimingComponent::GetAimingState() const
+{
+	return AimingState;
+}
+
 void UWeaponAimingComponent::Initialize(
 	UBarrel* NewBarrel,
 	UTurret* NewTurret

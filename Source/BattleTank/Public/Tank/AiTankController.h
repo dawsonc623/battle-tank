@@ -26,6 +26,6 @@ public:
 private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
-	float FiringRadius = 3000;
+	float FiringRadius = 8000;
 
 };

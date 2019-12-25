@@ -37,6 +37,8 @@ public:
 		const FVector& AimLocation
 	);
 
+	EAimingState GetAimingState() const;
+
 	virtual void TickComponent(
 		float DeltaTime,
 		ELevelTick TickType,

@@ -35,8 +35,11 @@ void AAiTankController::Tick(
 				PlayerPawn->GetActorLocation()
 			);
 
-			// TODO Re-enable firing when it is not frustrating to have it on
-			//AimingComponent->Fire();
+			if (AimingComponent->GetAimingState() == EAimingState::Ready)
+			{
+				// TODO Re-enable firing when it is not frustrating to have it on
+				// AimingComponent->FireProjectile();
+			}
 		}
 	}
 }
